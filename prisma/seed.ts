@@ -2,18 +2,7 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-async function main() {
-  await prisma.game.createMany({
-    data: [
-      {
-        name: 'game-1',
-      },
-      {
-        name: 'game-2',
-      },
-    ],
-  })
-}
+async function main() {}
 main()
   .then(async () => {
     await prisma.$disconnect()

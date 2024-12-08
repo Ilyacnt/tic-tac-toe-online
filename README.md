@@ -1,5 +1,7 @@
 ## Getting Started
 
+Node version: 20.11.1
+
 First, run the development server:
 
 ```bash
@@ -14,10 +16,10 @@ docker compose up
 
 ## Utils
 
-For Prisma migrations:
+For Prisma dev migrations:
 
 ```bash
-npx prisma migrate dev --name {migration name}
+npm run db:migrate:dev
 ```
 
 For run Prisma seed and reset DB:

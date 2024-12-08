@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "pretty": "prettier -w .",
+    "db:migrate:dev": "dotenv -e .env.development -- npx prisma migrate dev",
     "db:reset": "dotenv -e .env.development -- npx prisma migrate reset"
   },
   "prisma": {
@@ -23,7 +24,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
