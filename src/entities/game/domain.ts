@@ -2,12 +2,16 @@ export type GameEntity = GameIdleEntity | GameInProgressEntity | GameOverEntity 
 
 export type GameIdleEntity = {
   id: string
-  players: PlayerEntity[]
+  name: string
+  createdAt: Date
+  creator: PlayerEntity
   status: GameStatus.IDLE
 }
 
 export type GameInProgressEntity = {
   id: string
+  name: string
+  createdAt: Date
   players: PlayerEntity[]
   status: GameStatus.IN_PROGRESS
   field: Field
@@ -15,6 +19,8 @@ export type GameInProgressEntity = {
 
 export type GameOverEntity = {
   id: string
+  name: string
+  createdAt: Date
   players: PlayerEntity[]
   status: GameStatus.GAME_OVER
   field: Field
@@ -23,6 +29,8 @@ export type GameOverEntity = {
 
 export type GameOverDrawEntity = {
   id: string
+  name: string
+  createdAt: Date
   players: PlayerEntity[]
   status: GameStatus.GAME_OVER_DRAW
   field: Field

@@ -16,14 +16,14 @@ docker compose up
 
 ## Utils
 
-For Prisma dev migrations:
-
-```bash
-npm run db:migrate:dev
-```
-
 For run Prisma seed and reset DB:
 
 ```bash
 npm run db:reset
+```
+
+For Prisma dev migrations:
+
+```bash
+npm run db:migrate:dev
 ```

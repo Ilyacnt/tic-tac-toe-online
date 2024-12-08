@@ -7,11 +7,13 @@ import {
   GameOverEntity,
   GameStatus,
 } from '../domain'
-import { Game, User } from '@prisma/client'
+import { Game, Prisma, User } from '@prisma/client'
 import { z } from 'zod'
+import { removePassword } from '@/shared/lib/password'
 
-async function gamesList(): Promise<GameEntity[]> {
+async function gamesList(where?: Prisma.GameWhereInput): Promise<GameEntity[]> {
   const games = await prisma.game.findMany({
+    where,
     include: {
       winner: true,
       players: true,
@@ -31,18 +33,30 @@ const fieldSchema = z.array(z.union([z.string(), z.null()]))
 function mapDbGameToGameEntity(
   dbGame: Game & { players: User[]; winner: User | null }
 ): GameEntity {
+  const players = dbGame.players.map(removePassword)
+
   switch (dbGame.status) {
     case GameStatus.IDLE:
+      const [creator] = players
+
+      if (!creator) {
+        throw new Error('There is no creator in IDLE game')
+      }
+
       return {
         id: dbGame.id,
-        players: dbGame.players,
+        name: dbGame.name,
+        createdAt: dbGame.gameCreatedAt,
+        creator,
         status: dbGame.status as GameStatus.IDLE,
       } satisfies GameIdleEntity
 
     case GameStatus.IN_PROGRESS:
       return {
         id: dbGame.id,
-        players: dbGame.players,
+        name: dbGame.name,
+        createdAt: dbGame.gameCreatedAt,
+        players: players,
         status: dbGame.status as GameStatus.IN_PROGRESS,
         field: fieldSchema.parse(dbGame.field),
       } satisfies GameInProgressEntity
@@ -54,16 +68,20 @@ function mapDbGameToGameEntity(
 
       return {
         id: dbGame.id,
-        players: dbGame.players,
+        name: dbGame.name,
+        createdAt: dbGame.gameCreatedAt,
+        players: players,
         status: dbGame.status as GameStatus.GAME_OVER,
         field: fieldSchema.parse(dbGame.field),
-        winner: dbGame.winner,
+        winner: removePassword(dbGame.winner),
       } satisfies GameOverEntity
 
     case GameStatus.GAME_OVER_DRAW:
       return {
         id: dbGame.id,
-        players: dbGame.players,
+        name: dbGame.name,
+        createdAt: dbGame.gameCreatedAt,
+        players: players,
         status: dbGame.status as GameStatus.GAME_OVER_DRAW,
         field: fieldSchema.parse(dbGame.field),
       } satisfies GameOverDrawEntity

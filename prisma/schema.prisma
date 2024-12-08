@@ -20,8 +20,8 @@ model Game {
   players       User[]     @relation("Games")
   winner        User?      @relation(fields: [winnerId], references: [id])
   winnerId      String?
-  gameCreatedAt String?
-  gameOverAt    String?
+  gameCreatedAt DateTime   @default(now())
+  gameOverAt    DateTime?
   userId        String?
   field         Json?
 }
@@ -38,7 +38,6 @@ model User {
   login        String
   rating       Int
   passwordHash String
-  status       String
   games        Game[] @relation("Games")
   gamesWon     Game[]
 }
