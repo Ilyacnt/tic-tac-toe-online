@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "pretty": "prettier -w .",
     "db:reset": "dotenv -e .env.development -- npx prisma migrate reset"
   },
   "prisma": {
