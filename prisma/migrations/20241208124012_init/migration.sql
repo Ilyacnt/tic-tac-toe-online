@@ -1,18 +1,19 @@
-/*
-  Warnings:
-
-  - Added the required column `status` to the `Game` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "GameStatus" AS ENUM ('IDLE', 'IN_PROGRESS', 'GAME_OVER', 'GAME_OVER_DRAW');
 
--- AlterTable
-ALTER TABLE "Game" ADD COLUMN     "gameCreatedAt" TEXT,
-ADD COLUMN     "gameOverAt" TEXT,
-ADD COLUMN     "status" "GameStatus" NOT NULL,
-ADD COLUMN     "userId" TEXT,
-ADD COLUMN     "winnerId" TEXT;
+-- CreateTable
+CREATE TABLE "Game" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "status" "GameStatus" NOT NULL,
+    "winnerId" TEXT,
+    "gameCreatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "gameOverAt" TIMESTAMP(3),
+    "userId" TEXT,
+    "field" JSONB,
+
+    CONSTRAINT "Game_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -20,7 +21,6 @@ CREATE TABLE "User" (
     "login" TEXT NOT NULL,
     "rating" INTEGER NOT NULL,
     "passwordHash" TEXT NOT NULL,
-    "status" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
