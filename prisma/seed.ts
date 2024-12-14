@@ -20,27 +20,27 @@ async function main() {
     },
   })
 
-  await prisma.game.create({
-    data: {
-      name: 'game-1',
-      status: GameStatus.IDLE,
-      players: { connect: { id: user.id } },
-      field: Array(9).fill(null),
-    },
-  })
+  // await prisma.game.create({
+  //   data: {
+  //     name: 'game-1',
+  //     status: GameStatus.IDLE,
+  //     players: { connect: { id: user.id } },
+  //     field: Array(9).fill(null),
+  //   },
+  // })
 
   const tenMinutesAgo = new Date()
   tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 10)
 
-  await prisma.game.create({
-    data: {
-      name: 'game-2',
-      gameCreatedAt: tenMinutesAgo,
-      status: GameStatus.IDLE,
-      players: { connect: { id: user2.id } },
-      field: Array(9).fill(null),
-    },
-  })
+  // await prisma.game.create({
+  //   data: {
+  //     name: 'game-2',
+  //     gameCreatedAt: tenMinutesAgo,
+  //     status: GameStatus.IDLE,
+  //     players: { connect: { id: user2.id } },
+  //     field: Array(9).fill(null),
+  //   },
+  // })
 }
 main()
   .then(async () => {

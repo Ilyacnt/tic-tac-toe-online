@@ -17,8 +17,10 @@
   "dependencies": {
     "@prisma/client": "^6.0.1",
     "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-toast": "^1.2.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cuid": "^3.0.0",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.468.0",
     "next": "15.0.4",
